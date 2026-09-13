@@ -1,0 +1,1675 @@
+{
+  "version": "current-spec-2026-09-13",
+  "rules": {
+    "board_size": {
+      "value": 16,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §1"
+    },
+    "board_topology": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20"
+    },
+    "initial_wallet": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §17"
+    },
+    "xp_thresholds": {
+      "value": [
+        5,
+        10,
+        15
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §1"
+    },
+    "merge_base_xp": {
+      "value": 5,
+      "confidence": "community_current",
+      "source": "RULE_STATUS.md §1"
+    },
+    "merge_source_xp": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §18"
+    },
+    "merge_counters": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §18"
+    },
+    "treasure_merge_decay": {
+      "value": "retain_target",
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §18"
+    },
+    "sell_values": {
+      "value": {
+        "GREEN": [
+          4,
+          8,
+          12,
+          16
+        ],
+        "BLUE": [
+          8,
+          16,
+          24,
+          32
+        ],
+        "PURPLE": [
+          15,
+          30,
+          45,
+          60
+        ],
+        "GOLD": [
+          25,
+          50,
+          75,
+          100
+        ]
+      },
+      "confidence": "community_current",
+      "source": "RULE_STATUS.md §1"
+    },
+    "inventory_capacity": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "land_prices": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "shop_refill": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "shop_distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "card_distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "stand_distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "forced_die_consumption": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "simultaneous_event_order": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "xp_max_storage": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "gain_progress_sources": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "random_target_distribution": {
+      "value": "uniform",
+      "confidence": "inferred",
+      "source": "RULE_STATUS.md §16"
+    },
+    "multi_target_sampling": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "generated_building_state": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "coin_tile_payout": {
+      "value": 5,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §1"
+    },
+    "anchor_priority": {
+      "value": 2,
+      "confidence": "verified_current",
+      "source": "SPEC.md §10 (relative priority encoding)"
+    },
+    "shrimp_priority": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "SPEC.md §10 (relative priority encoding)"
+    },
+    "anchor_face": {
+      "value": 4,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §8"
+    },
+    "shrimp_face": {
+      "value": 6,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §7"
+    },
+    "anchor_pass": {
+      "value": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §8"
+    },
+    "SMALL_WALLET.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "SMALL_WALLET.rarity": {
+      "value": "GREEN",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "WISHING_WELL.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "WISHING_WELL.rarity": {
+      "value": "BLUE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "MONEY_TREE.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "MONEY_TREE.rarity": {
+      "value": "BLUE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "LUCKY_COLOR_GATE.packs": {
+      "value": [
+        "PROSPERITY",
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "LUCKY_COLOR_GATE.rarity": {
+      "value": "PURPLE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "HALL_OF_WEALTH.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "HALL_OF_WEALTH.rarity": {
+      "value": "PURPLE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "RABBIT_INN.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "RABBIT_INN.rarity": {
+      "value": "GOLD",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "PIGGY_BANK.packs": {
+      "value": [
+        "PROMOTION"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "PIGGY_BANK.rarity": {
+      "value": "GREEN",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "PIGLET_BANK.packs": {
+      "value": [
+        "PROMOTION"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "PIGLET_BANK.rarity": {
+      "value": "BLUE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "SMALL_BOOKSTORE.packs": {
+      "value": [
+        "PROMOTION"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "SMALL_BOOKSTORE.rarity": {
+      "value": "BLUE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "BECKONING_CAT_VAULT.packs": {
+      "value": [
+        "PROMOTION"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "BECKONING_CAT_VAULT.rarity": {
+      "value": "PURPLE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "FOX_ANTIQUE_SHOP.packs": {
+      "value": [
+        "PROMOTION"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "FOX_ANTIQUE_SHOP.rarity": {
+      "value": "GOLD",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "DICE_SCULPTURE.packs": {
+      "value": [
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "DICE_SCULPTURE.rarity": {
+      "value": "GREEN",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "FOUR_LEAF_INN.packs": {
+      "value": [
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "FOUR_LEAF_INN.rarity": {
+      "value": "BLUE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "LUCKY_STAR_COIN_POND.packs": {
+      "value": [
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "LUCKY_STAR_COIN_POND.rarity": {
+      "value": "PURPLE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "DICE_TOWER.packs": {
+      "value": [
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "DICE_TOWER.rarity": {
+      "value": "PURPLE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "HOLOGRAM_EXPERIENCE_HUT.packs": {
+      "value": [
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "HOLOGRAM_EXPERIENCE_HUT.rarity": {
+      "value": "GOLD",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "TREASURE.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "TREASURE.rarity": {
+      "value": "GREEN",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "SAIL.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "SAIL.rarity": {
+      "value": "BLUE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "RUDDER.packs": {
+      "value": [
+        "PIRATE",
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "RUDDER.rarity": {
+      "value": "BLUE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "ANCHOR.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "ANCHOR.rarity": {
+      "value": "PURPLE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "CANNON.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "CANNON.rarity": {
+      "value": "PURPLE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "CAPTAIN_HAT.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §6,17,19,21,23"
+    },
+    "CAPTAIN_HAT.rarity": {
+      "value": "GOLD",
+      "confidence": "verified_current",
+      "source": "SPEC.md §17,19,21,23"
+    },
+    "PIGGY_BANK.sell": {
+      "value": [
+        1,
+        8,
+        25,
+        45
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §4"
+    },
+    "PIGLET_BANK.sell": {
+      "value": [
+        3,
+        15,
+        35,
+        65
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §4"
+    },
+    "SMALL_WALLET.after": {
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "WISHING_WELL.after": {
+      "value": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "WISHING_WELL.stage": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "MONEY_TREE.stay": {
+      "value": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "MONEY_TREE.dice": {
+      "value": [
+        2,
+        3,
+        6,
+        9
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "LUCKY_COLOR_GATE.dice": {
+      "value": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "HALL_OF_WEALTH.stay": {
+      "value": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "RABBIT_INN.payout": {
+      "value": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "RABBIT_INN.strength": {
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "MIMI.bonus": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "RABBIT.bonus": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "RACCOON.payout": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "UPDATE.threshold": {
+      "value": 3,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "UPDATE.bonus": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "RULE_STATUS.md §2–3"
+    },
+    "forced_SMALL_WALLET": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §26; unresolved implementation dependency"
+    },
+    "forced_WISHING_WELL": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §26; unresolved implementation dependency"
+    },
+    "forced_MONEY_TREE": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §26; unresolved implementation dependency"
+    },
+    "forced_HALL_OF_WEALTH": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §26; unresolved implementation dependency"
+    },
+    "forced_RABBIT_INN": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §26; unresolved implementation dependency"
+    },
+    "empty_random_target": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §26; unresolved implementation dependency"
+    },
+    "stand_charge_consumption": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §26; unresolved implementation dependency"
+    },
+    "forced_die_index": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §26; unresolved implementation dependency"
+    },
+    "PIGGY_BANK.dice": {
+      "value": 2,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "PIGGY_BANK.xp": {
+      "value": 2,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "PIGLET_BANK.xp": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "SMALL_BOOKSTORE.xp": {
+      "value": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "SMALL_BOOKSTORE.pass": {
+      "value": [
+        3,
+        6,
+        9,
+        12
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "BECKONING_CAT_VAULT.xp": {
+      "value": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "BECKONING_CAT_VAULT.pass": {
+      "value": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "BECKONING_CAT_VAULT.sale_bonus": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "FOX_ANTIQUE_SHOP.xp": {
+      "value": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "FOX_ANTIQUE_SHOP.targets": {
+      "value": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "DICE_SCULPTURE.dice": {
+      "value": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "FOUR_LEAF_INN.dice": {
+      "value": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "FOUR_LEAF_INN.growth": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "LUCKY_STAR_COIN_POND.two": {
+      "value": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "DICE_TOWER.growth": {
+      "value": [
+        6,
+        8,
+        10,
+        12
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "DICE_TOWER.dice": {
+      "value": [
+        8,
+        16,
+        24,
+        36
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "HOLOGRAM_EXPERIENCE_HUT.multiplier": {
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "JASMINE.threshold": {
+      "value": 4,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "THREE_LEAF.threshold": {
+      "value": 6,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "TREASURE.stay": {
+      "value": [
+        12,
+        18,
+        24,
+        30
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "TREASURE.decay": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "SAIL.pass": {
+      "value": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "SAIL.stay": {
+      "value": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "SAIL.dice": {
+      "value": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "RUDDER.stay": {
+      "value": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "CANNON.pass": {
+      "value": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "CAPTAIN_HAT.pass": {
+      "value": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "CAPTAIN_HAT.growth": {
+      "value": [
+        12,
+        16,
+        20,
+        24
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "PIRATE_KING.bonus": {
+      "value": 4,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "GREAT_SHARK.threshold": {
+      "value": 4,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "SHOVEL.threshold": {
+      "value": 8,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "SHOVEL.payout": {
+      "value": 88,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "ROLLER.xp": {
+      "value": 5,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "SECRET_BOOK.xp": {
+      "value": 1,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "CREDIT_CARD.divisor": {
+      "value": 50,
+      "confidence": "verified_current",
+      "source": "SPEC.md §19–25; RULE_STATUS.md §4–10"
+    },
+    "PIG.threshold": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "palunan_purchase": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "palunan_sale": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "palunan_rounding": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "fox_generation_distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "fox_targets": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "fox_self_target": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "dice_tower_xp_transfer": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "THREE_LEAF.distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "treasure_minimum": {
+      "value": 0,
+      "confidence": "inferred",
+      "source": "RULE_STATUS.md §8"
+    },
+    "big_bag_copy_state": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "big_bag_distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "score_wallet_rounding": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "score_building_value": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "score_palunan": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "stage_quotas": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "stage_rolls": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "stage_progress_reset": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "stage_clear_timing": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "stand_offers": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "stand_selection_duplicates": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §20; unresolved implementation dependency"
+    },
+    "score_scope": {
+      "value": "placed",
+      "confidence": "community_current",
+      "source": "RULE_STATUS.md §12"
+    },
+    "MIMI.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "RABBIT.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "RACCOON.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "UPDATE.packs": {
+      "value": [
+        "PROSPERITY"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "PIG.packs": {
+      "value": [
+        "PROMOTION"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "PALUNAN.packs": {
+      "value": [
+        "PROMOTION"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "JASMINE.packs": {
+      "value": [
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "FRIED_SHRIMP.packs": {
+      "value": [
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "THREE_LEAF.packs": {
+      "value": [
+        "LUCK"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "PIRATE_KING.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "GREAT_SHARK.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "SHOVEL.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "SMALL_SHARK.packs": {
+      "value": [
+        "PIRATE"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "BIG_BAG.packs": {
+      "value": [],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "ROLLER.packs": {
+      "value": [],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "SECRET_BOOK.packs": {
+      "value": [],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "CREDIT_CARD.packs": {
+      "value": [],
+      "confidence": "verified_current",
+      "source": "SPEC.md §18,20,22,24,25"
+    },
+    "big_bag_template": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "cannon_reward_distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "forced_HOLOGRAM_EXPERIENCE_HUT": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "forced_die_tie_order": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "four_leaf_growth_order": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "insufficient_random_targets": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "inventory_reward_overflow": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "pig_reward_distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "purchase_refill_counts_as_refresh": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "refresh_prices": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "roll_effect_order": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "roller_corresponding_lot": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "sale_stand_effects": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "shop_refill_distribution": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "stage_progress_scores": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "vault_xp_scope": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Implementation dependency; see RULE_STATUS.md §21 (not newly verified)"
+    },
+    "SMALL_WALLET.triggers": {
+      "value": [
+        "after"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "WISHING_WELL.triggers": {
+      "value": [
+        "after",
+        "stage"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "MONEY_TREE.triggers": {
+      "value": [
+        "die",
+        "stay"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "LUCKY_COLOR_GATE.triggers": {
+      "value": [
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "HALL_OF_WEALTH.triggers": {
+      "value": [
+        "roll",
+        "stay"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "RABBIT_INN.triggers": {
+      "value": [
+        "pass"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "PIGGY_BANK.triggers": {
+      "value": [
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "PIGLET_BANK.triggers": {
+      "value": [
+        "after"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "SMALL_BOOKSTORE.triggers": {
+      "value": [
+        "pass",
+        "stay"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "BECKONING_CAT_VAULT.triggers": {
+      "value": [
+        "after",
+        "pass"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "FOX_ANTIQUE_SHOP.triggers": {
+      "value": [
+        "die",
+        "pass"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "DICE_SCULPTURE.triggers": {
+      "value": [
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "FOUR_LEAF_INN.triggers": {
+      "value": [
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "LUCKY_STAR_COIN_POND.triggers": {
+      "value": [
+        "die",
+        "roll"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "DICE_TOWER.triggers": {
+      "value": [
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "HOLOGRAM_EXPERIENCE_HUT.triggers": {
+      "value": [
+        "pass",
+        "roll"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "TREASURE.triggers": {
+      "value": [
+        "stay"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "SAIL.triggers": {
+      "value": [
+        "pass",
+        "stay",
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "RUDDER.triggers": {
+      "value": [
+        "pass",
+        "stay"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "ANCHOR.triggers": {
+      "value": [
+        "pass"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "CANNON.triggers": {
+      "value": [
+        "die",
+        "pass"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "CAPTAIN_HAT.triggers": {
+      "value": [
+        "pass",
+        "stay"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "MIMI.triggers": {
+      "value": [
+        "after"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "RABBIT.triggers": {
+      "value": [
+        "start"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "RACCOON.triggers": {
+      "value": [
+        "pass"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "UPDATE.triggers": {
+      "value": [
+        "refresh"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "PIG.triggers": {
+      "value": [
+        "sale"
+      ],
+      "confidence": "unknown",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "PALUNAN.triggers": {
+      "value": [],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "JASMINE.triggers": {
+      "value": [
+        "roll"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "FRIED_SHRIMP.triggers": {
+      "value": [
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "THREE_LEAF.triggers": {
+      "value": [
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "PIRATE_KING.triggers": {
+      "value": [
+        "start"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "GREAT_SHARK.triggers": {
+      "value": [
+        "die"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "SHOVEL.triggers": {
+      "value": [
+        "treasure_stay"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "SMALL_SHARK.triggers": {
+      "value": [
+        "start"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "BIG_BAG.triggers": {
+      "value": [
+        "start"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "ROLLER.triggers": {
+      "value": [
+        "special"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "SECRET_BOOK.triggers": {
+      "value": [
+        "turn_start"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "CREDIT_CARD.triggers": {
+      "value": [
+        "turn_start"
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25; routing declaration (not event priority)"
+    },
+    "MONEY_TREE.natural_faces": {
+      "value": [
+        3
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "MONEY_TREE.natural_cardinality": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "LUCKY_COLOR_GATE.natural_faces": {
+      "value": [
+        1,
+        6
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "LUCKY_COLOR_GATE.natural_cardinality": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "PIGGY_BANK.natural_faces": {
+      "value": [
+        1
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "PIGGY_BANK.natural_cardinality": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "FOX_ANTIQUE_SHOP.natural_faces": {
+      "value": [
+        5
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "FOX_ANTIQUE_SHOP.natural_cardinality": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "DICE_SCULPTURE.natural_faces": {
+      "value": [
+        6
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "DICE_SCULPTURE.natural_cardinality": {
+      "value": "PER_DIE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "FOUR_LEAF_INN.natural_faces": {
+      "value": [
+        2,
+        4,
+        6
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "FOUR_LEAF_INN.natural_cardinality": {
+      "value": "PER_DIE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "LUCKY_STAR_COIN_POND.natural_faces": {
+      "value": [
+        1
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "LUCKY_STAR_COIN_POND.natural_cardinality": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "DICE_TOWER.natural_faces": {
+      "value": [
+        4,
+        6
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "DICE_TOWER.natural_cardinality": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "SAIL.natural_faces": {
+      "value": [
+        4
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "SAIL.natural_cardinality": {
+      "value": "PER_DIE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "CANNON.natural_faces": {
+      "value": [
+        4
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "CANNON.natural_cardinality": {
+      "value": "PER_DIE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "FRIED_SHRIMP.natural_faces": {
+      "value": [
+        1
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "FRIED_SHRIMP.natural_cardinality": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "THREE_LEAF.natural_faces": {
+      "value": [
+        6
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "THREE_LEAF.natural_cardinality": {
+      "value": "PER_DIE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "GREAT_SHARK.natural_faces": {
+      "value": [
+        4
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §17–25"
+    },
+    "GREAT_SHARK.natural_cardinality": {
+      "value": "PER_DIE",
+      "confidence": "verified_current",
+      "source": "SPEC.md §9,17–25; duplicate matching-face cardinality not inferred"
+    },
+    "HALL_OF_WEALTH.natural_cardinality": {
+      "value": "PER_ROLL",
+      "confidence": "verified_current",
+      "source": "SPEC.md §9,17.5"
+    },
+    "natural_die_distribution": {
+      "value": [
+        {
+          "face": 1,
+          "probability": "1/6"
+        },
+        {
+          "face": 2,
+          "probability": "1/6"
+        },
+        {
+          "face": 3,
+          "probability": "1/6"
+        },
+        {
+          "face": 4,
+          "probability": "1/6"
+        },
+        {
+          "face": 5,
+          "probability": "1/6"
+        },
+        {
+          "face": 6,
+          "probability": "1/6"
+        }
+      ],
+      "confidence": "verified_current",
+      "source": "SPEC.md §9: one fair six-sided die"
+    },
+    "LUCKY_COLOR_GATE.different_face_branches": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Two-die 1+6 branch interaction not specified in SPEC.md §17.4"
+    }
+  }
+}

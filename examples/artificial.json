@@ -1,0 +1,287 @@
+{
+  "description": "人工盤面・残り1ターン。配置/売却/ロールを比較する検証用シナリオ。現行初期状態ではありません。",
+  "state": {
+    "$type": "GameState",
+    "difficulty_id": "artificial",
+    "stage_index": 0,
+    "turns_remaining": 1,
+    "wallet": 20,
+    "stage_progress": 0,
+    "player_position": 0,
+    "selected_packs": {
+      "$set": [
+        {
+          "$enum": "Pack",
+          "value": "LUCK"
+        },
+        {
+          "$enum": "Pack",
+          "value": "PIRATE"
+        },
+        {
+          "$enum": "Pack",
+          "value": "PROMOTION"
+        },
+        {
+          "$enum": "Pack",
+          "value": "PROSPERITY"
+        }
+      ]
+    },
+    "unlocked_lots": {
+      "$set": [
+        0,
+        1
+      ]
+    },
+    "buildings": [],
+    "inventory": [
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 1,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "SMALL_WALLET"
+        },
+        "level": 1,
+        "xp": 0,
+        "location": null,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      }
+    ],
+    "stands": [],
+    "shop_offers": [],
+    "shop_refresh_count": 0,
+    "next_dice_count": 1,
+    "forced_die_effects": [],
+    "rule_version": "current-spec-2026-09-13",
+    "movement_remaining": 0,
+    "forced_stop": false,
+    "roll_id": 0,
+    "last_roll": [],
+    "progress_score": 0,
+    "status": "playing",
+    "phase": "management",
+    "stand_offers": []
+  },
+  "board": {
+    "$type": "Board",
+    "spaces": [
+      {
+        "$type": "Space",
+        "id": 0,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "START"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 1,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 0
+      },
+      {
+        "$type": "Space",
+        "id": 2,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 1
+      },
+      {
+        "$type": "Space",
+        "id": 3,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 4,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 5,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 6,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 7,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 8,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 9,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 10,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 11,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 12,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 13,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 14,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 15,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": null
+      }
+    ],
+    "lots": [
+      {
+        "$type": "Lot",
+        "id": 0,
+        "adjacent_lots": {
+          "$set": [
+            1
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 1,
+        "adjacent_lots": {
+          "$set": [
+            0
+          ]
+        },
+        "corresponding_special_tile": null
+      }
+    ],
+    "confidence": {
+      "$enum": "RuleConfidence",
+      "value": "inferred"
+    },
+    "source": "Artificial solver fixture; not observed topology"
+  },
+  "accept_topology_assumption": true,
+  "allowed_actions": [
+    "END_MANAGEMENT_AND_ROLL",
+    "PLACE",
+    "SELL"
+  ],
+  "assumptions": {
+    "gain_progress_sources": [
+      "building",
+      "tile",
+      "stand",
+      "sale"
+    ],
+    "roll_effect_order": "dice_then_roll",
+    "simultaneous_event_order": "board_then_stands",
+    "stage_clear_timing": "turn_end",
+    "stage_quotas": [
+      1
+    ],
+    "stage_progress_scores": [
+      10
+    ],
+    "score_wallet_rounding": "floor",
+    "score_building_value": "rarity_sell_base",
+    "inventory_capacity": 5,
+    "shop_refill": "none",
+    "refresh_prices": [
+      5,
+      10,
+      15
+    ],
+    "shop_distribution": [
+      {
+        "probability": "1",
+        "value": []
+      }
+    ]
+  }
+}

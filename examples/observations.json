@@ -1,0 +1,58 @@
+{
+  "observations": [
+    {
+      "rule_id": "card_distribution",
+      "context": {
+        "stage_index": 0
+      },
+      "value": {
+        "building_type": "SMALL_WALLET",
+        "level": 1,
+        "xp": 0,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      }
+    },
+    {
+      "rule_id": "card_distribution",
+      "context": {
+        "stage_index": 0
+      },
+      "value": {
+        "building_type": "PIGGY_BANK",
+        "level": 1,
+        "xp": 0,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      }
+    },
+    {
+      "rule_id": "card_distribution",
+      "context": {
+        "stage_index": 0
+      },
+      "value": {
+        "building_type": "SMALL_WALLET",
+        "level": 1,
+        "xp": 0,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      }
+    }
+  ]
+}
