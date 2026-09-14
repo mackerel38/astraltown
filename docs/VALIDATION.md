@@ -87,7 +87,9 @@ Only `card_distribution` and `generated_building_state` appear in `profile_assum
 ## CI configuration
 
 `.github/workflows/test.yml` defines Python 3.12 and 3.13 core jobs installing `.[test]`, running pytest and compileall.
-A separate Python 3.12 job installs `.[gui,test]` and runs `QT_QPA_PLATFORM=offscreen pytest tests/test_ui.py`.
+A separate Python 3.12 job installs Qt EGL/OpenGL runtime libraries and `.[gui,test]`, then runs `QT_QPA_PLATFORM=offscreen pytest tests/test_ui.py`.
+The initial CI run passed both core jobs; its GUI import failed because the runner lacked `libEGL.so.1`.
+The workflow now explicitly installs `libegl1` / `libopengl0` before the GUI check.
 The local results above use Python 3.14.7; execution of the other versions is reported by
 [the repository Actions runs](https://github.com/mackerel38/astraltown/actions/workflows/test.yml).
 
