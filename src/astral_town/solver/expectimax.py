@@ -1,10 +1,11 @@
 """Exact chance weighting in a bounded decision tree, with explicit diagnostics."""
 
-from dataclasses import dataclass,replace
+from dataclasses import dataclass,field,replace
 from fractions import Fraction
 
 from astral_town.rules.registry import UnresolvedRule
 from astral_town.rules.errors import IllegalAction, CalculationCancelled as Cancelled
+from .errors import SearchBudgetExceeded
 from .evaluation import Metrics,terminal_metrics,utility
 from .management_search import Action,actions,apply_action
 from .transposition import TranspositionTable
@@ -29,6 +30,10 @@ class SearchResult:
     cancelled: bool = False
     assumptions_used: tuple[str,...] = ()
     empirical_rules_used: tuple[str,...] = ()
+    budget_exhausted: bool = False
+    profile: str | None = None
+    profile_assumptions_used: tuple[str,...] = ()
+    assumption_values: dict = field(default_factory=dict)
 
 
 class Expectimax:
@@ -50,8 +55,8 @@ class Expectimax:
 
     def _check(self):
         if self.cancel and self.cancel():raise Cancelled()
+        if self.nodes>=self.node_budget:raise SearchBudgetExceeded()
         self.nodes+=1
-        if self.nodes>self.node_budget:raise UnresolvedRule("search_node_budget")
 
     def _value(self,metrics,*,root=False):
         return utility(metrics,self.objective,risk_lambda=self.risk_lambda,clear_threshold=self.clear_threshold)
@@ -69,7 +74,7 @@ class Expectimax:
         rolled=action.kind=="END_MANAGEMENT_AND_ROLL"
         combined=(Metrics(),)
         for outcome in self._outcomes(state,action):
-            choices=self._frontier_node(outcome.state,horizon-int(rolled),self.management_depth if rolled else max(0,depth-1))
+            choices=self._frontier_node(outcome.state,horizon-int(rolled),self.management_depth if rolled else max(0,depth-int(action.kind!="SELECT_STAND")))
             next_values=[]
             for prefix in combined:
                 for choice in choices:
@@ -116,7 +121,7 @@ class Expectimax:
         result=Metrics()
         rolled=action.kind=="END_MANAGEMENT_AND_ROLL"
         for outcome in outcomes:
-            result=result+self._node(outcome.state,horizon-int(rolled),self.management_depth if rolled else max(0,depth-1))*outcome.probability
+            result=result+self._node(outcome.state,horizon-int(rolled),self.management_depth if rolled else max(0,depth-int(action.kind!="SELECT_STAND")))*outcome.probability
         return result
 
     def _node(self,state,horizon,depth):
@@ -145,13 +150,13 @@ class Expectimax:
         sequence=[first]
         action=first
         depth=self.management_depth
-        while action.kind!="END_MANAGEMENT_AND_ROLL" and depth>0:
+        while action.kind!="END_MANAGEMENT_AND_ROLL" and (depth>0 or action.kind=="SELECT_STAND"):
             outcomes=apply_action(self.game,state,action)
             if len(outcomes)!=1:
                 self.limitations.add("management continuation branches on random outcome")
                 break
             state=outcomes[0].state
-            depth-=1
+            depth-=int(action.kind!="SELECT_STAND")
             record=self.policy.get((state.canonical_key(),self.horizon,depth))
             if record is None:break
             original,action=record
@@ -178,6 +183,7 @@ class Expectimax:
         self.policy.clear()
         recommendations=[]
         cancelled=False
+        budget_exhausted=False
         try:
             for action in self._available(state,self.management_depth):
                 try:
@@ -197,16 +203,22 @@ class Expectimax:
                 except IllegalAction:continue
                 value=self._value(metrics,root=True)
                 if value is not None:recommendations.append(Recommendation(sequence,metrics,value))
+        except SearchBudgetExceeded:
+            budget_exhausted=True
+            self.limitations.add("search node budget exhausted; only fully evaluated root candidates retained")
         except Cancelled:cancelled=True
         recommendations.sort(key=lambda r:(r.value,r.metrics.clear_probability),reverse=True)
         exactness=self.game.exactness
         if self.missing:exactness="unresolved"
         elif self.limitations:exactness="bounded-search" + (" / assumption-based" if exactness=="assumption-based" else "")
+        if budget_exhausted and not recommendations and not self.missing:exactness="budget-exhausted"
         if cancelled:exactness="cancelled"
+        if self.game.registry.profile_assumptions_used and "assumption-based" not in exactness:exactness+=" / assumption-based"
         # Incomplete rule-dependent searches never offer provisional plans as optimal.
         if self.missing or cancelled:recommendations=[]
         top=tuple(recommendations[:3])
         gap=top[0].value-top[1].value if len(top)>1 else None
         return SearchResult(top,exactness,tuple(sorted(self.limitations)),tuple(sorted(self.missing)),self.table.hits,self.nodes,gap,cancelled,
-                            tuple(sorted(self.game.registry.used & self.game.registry.assumptions.keys())),
-                            tuple(sorted(self.game.registry.used & self.game.registry.empirical.keys())))
+                            self.game.registry.assumptions_used,
+                            tuple(sorted(self.game.registry.used & self.game.registry.empirical.keys())),
+                            budget_exhausted,self.game.registry.profile,self.game.registry.profile_assumptions_used,self.game.registry.assumption_values)

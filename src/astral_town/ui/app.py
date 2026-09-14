@@ -89,12 +89,14 @@ class ObjectTable(QWidget):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self,path):
+    def __init__(self,path,*,profile=None,mode=None):
         super().__init__()
         self.worker=None
         self.setWindowTitle("Astral Town Optimizer — ルールと仮定を明示して比較")
         self.resize(1250,900)
         self.data=load_file(path)
+        if profile:self.data.update(profile=profile,rule_mode="playable")
+        if mode:self.data["rule_mode"]=mode
         root=QWidget();self.setCentralWidget(root)
         layout=QVBoxLayout(root)
         top=QHBoxLayout()
@@ -141,7 +143,14 @@ class MainWindow(QMainWindow):
         controls.addRow("目的",self.objective)
         self.threshold=QDoubleSpinBox();self.threshold.setRange(0,1);self.threshold.setSingleStep(.05);controls.addRow("最低クリア確率",self.threshold)
         self.risk=QDoubleSpinBox();self.risk.setRange(0,1000000);self.risk.setValue(1);controls.addRow("失敗ペナルティ λ",self.risk)
-        self.exact=QCheckBox("厳密な確率列挙（未知値は計算停止）");self.exact.setChecked(True);controls.addRow(self.exact)
+        self.rule_mode=QComboBox()
+        for label,value in (("Strict（既定仮定なし）","strict"),("Playable defaults","playable"),("Custom assumptions","custom"),("Empirical / 観測分布","empirical")):
+            self.rule_mode.addItem(label,value)
+        controls.addRow("ルールモード",self.rule_mode)
+        self.profile_warning=QLabel("⚠ 未確認ルールを仮定して計算します。\n確率分布は主に一様分布を使用します。\nゲーム真値ではなく、結果は assumption-based です。")
+        self.profile_warning.setWordWrap(True);controls.addRow(self.profile_warning)
+        self.rule_mode.currentIndexChanged.connect(lambda:self.profile_warning.setVisible(self.rule_mode.currentData()=="playable"))
+        self.exact=QCheckBox("確率列挙（外すとロールアウト）");self.exact.setChecked(True);controls.addRow(self.exact)
         self.horizon=QSpinBox();self.horizon.setRange(1,100);self.horizon.setValue(2);controls.addRow("先読みロール数",self.horizon)
         self.depth=QSpinBox();self.depth.setRange(0,20);self.depth.setValue(1);controls.addRow("管理行動の深さ",self.depth)
         self.nodes=QSpinBox();self.nodes.setRange(1,10000000);self.nodes.setValue(100000);controls.addRow("探索ノード上限",self.nodes)
@@ -158,6 +167,8 @@ class MainWindow(QMainWindow):
 
     def populate(self):
         game,state=from_scenario(self.data)
+        self.rule_mode.setCurrentIndex(self.rule_mode.findData(self.data.get("rule_mode", "playable" if self.data.get("profile") else "custom")))
+        self.profile_warning.setVisible(self.rule_mode.currentData()=="playable")
         self.description.setText(self.data.get("description","手動入力状態。未確定ルールは設定画面で明示します。"))
         for name,widget in self.inputs.items():
             value=getattr(state,name)
@@ -196,6 +207,9 @@ class MainWindow(QMainWindow):
         changes["shop_offers"]=tuple(shop)
         state=replace(state,**changes)
         data=json.loads(self.configuration.toPlainText());data["state"]=encode(state)
+        data["rule_mode"]=self.rule_mode.currentData()
+        if data["rule_mode"]=="playable":data["profile"]="playable-defaults"
+        else:data.pop("profile",None)
         from_scenario(data) # Validate before submission.
         return data
 
@@ -249,7 +263,10 @@ class MainWindow(QMainWindow):
         self.worker.start()
 
     def show_result(self,result):
-        lines=[result.get("exactness",""),""]
+        lines=[result.get("exactness",""),f"profile: {result.get('profile') or 'none'}",""]
+        if result.get("assumptions_used"):lines.extend(["参照した仮定:",*result["assumptions_used"],""])
+        if result.get("assumption_values"):lines.append(json.dumps(result["assumption_values"],ensure_ascii=False,indent=2))
+        if result.get("profile_assumptions_used"):lines.extend(["playable-defaults から参照:",*result["profile_assumptions_used"],""])
         labels={"PLACE":"配置","MOVE_BUILDING":"移動","SELL":"売却","BUY":"購入","MERGE":"合成","UNPLACE":"倉庫へ戻す",
                 "UNLOCK_LAND":"土地解放","REFRESH_SHOP":"ショップ更新","SELECT_STAND":"屋台選択","END_MANAGEMENT_AND_ROLL":"ロール"}
         for i,recommendation in enumerate(result.get("recommendations",[]),1):
@@ -286,7 +303,7 @@ class MainWindow(QMainWindow):
         else:event.accept()
 
 
-def run(path):
+def run(path,*,profile=None,mode=None):
     app=QApplication.instance() or QApplication(sys.argv)
-    window=MainWindow(path);window.show()
+    window=MainWindow(path,profile=profile,mode=mode);window.show()
     app.exec()

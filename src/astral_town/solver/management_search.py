@@ -65,7 +65,7 @@ def apply_action(game,state,action):
         if state.phase!="stand_selection":raise ValueError("Not selecting stand")
         kind=state.stand_offers[action.target]
         if any(s.stand_type==kind for s in state.stands):
-            if game.registry.require("stand_selection_duplicates")!="allow":raise ValueError("Duplicate stand rejected")
+            if game.registry.require("stand_selection_duplicates")!="allow":raise IllegalAction("Duplicate stand rejected")
         sid=max((s.instance_id for s in state.stands),default=-1)+1
         new=replace(state,stands=state.stands+(StandInstance(sid,kind),),stand_offers=(),phase="management")
         return game.start_turn(new)
@@ -79,8 +79,14 @@ def apply_action(game,state,action):
     elif action.kind=="REFRESH_SHOP":
         from astral_town.rules.economy import spend_coin
         prices=game.registry.require("refresh_prices")
-        if state.shop_refresh_count>=len(prices):raise UnresolvedRule("refresh_price_next")
-        state=spend_coin(state,prices[state.shop_refresh_count])
+        from collections.abc import Mapping
+        if isinstance(prices,Mapping):
+            if prices.get("strategy")!="linear_capped":raise ValueError("Unknown refresh price strategy")
+            price=min(prices["step"]*(state.shop_refresh_count+1),prices["cap"])
+        else:
+            if state.shop_refresh_count>=len(prices):raise UnresolvedRule("refresh_price_next")
+            price=prices[state.shop_refresh_count]
+        state=spend_coin(state,price)
         payload=(("reason","manual"),)
     return game.engine.run(state,(Event(mapping[action.kind],action.source_id,payload=payload),))
 
@@ -96,7 +102,7 @@ def enumerate_plans(game,state,*,max_actions=2,max_states=2000):
         current,path=queue.popleft()
         if current.phase!="stand_selection":plans.append(ManagementPlan(path+(Action("END_MANAGEMENT_AND_ROLL"),),replace(current,phase="roll")))
         available=tuple(a for a in actions(game,current) if a.kind!="END_MANAGEMENT_AND_ROLL")
-        if len(path)>=max_actions:
+        if sum(a.kind!="SELECT_STAND" for a in path)>=max_actions and current.phase!="stand_selection":
             truncated |= bool(available)
             continue
         for action in available:

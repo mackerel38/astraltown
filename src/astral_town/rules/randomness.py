@@ -1,6 +1,7 @@
 """One distribution API shared by exact and seeded sampling paths."""
 
 from fractions import Fraction
+from collections.abc import Mapping
 from math import lcm
 
 from astral_town.model.outcomes import WeightedOutcome, validate_distribution
@@ -8,6 +9,12 @@ from astral_town.model.outcomes import WeightedOutcome, validate_distribution
 
 def configured_distribution(registry, key, state=None):
     rows = registry.distribution(key,state) if state is not None else registry.require(key)
+    if isinstance(rows,Mapping):
+        if rows.get("strategy")=="explicit":rows=rows["outcomes"]
+        else:
+            if state is None:raise ValueError("Dynamic distributions require a state")
+            from .distributions import strategy_distribution
+            return strategy_distribution(registry,rows,state)
     return validate_distribution(WeightedOutcome(Fraction(row["probability"]), row["value"]) for row in rows)
 
 

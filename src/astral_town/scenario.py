@@ -8,11 +8,18 @@ from astral_town.rules.registry import RuleRegistry
 from astral_town.rules.game import Game
 
 
-def from_scenario(data):
+def from_scenario(data, *, profile=None, mode=None):
     state,board=decode(data["state"]),decode(data["board"])
     if not isinstance(state,GameState) or not isinstance(board,Board):raise ValueError("Scenario requires typed GameState and Board")
-    registry=RuleRegistry.from_data(data["rules"],data.get("assumptions"),legacy=data.get("legacy",False)) if "rules" in data else RuleRegistry.builtin(data.get("assumptions"),legacy=data.get("legacy",False))
-    registry.empirical=data.get("empirical_assumptions",{})
+    selected_profile=profile if profile is not None else data.get("profile")
+    mode=mode or ("playable" if profile else data.get("rule_mode", "playable" if selected_profile else "custom"))
+    if mode not in {"strict","playable","custom","empirical"}:raise ValueError("Unknown rule mode")
+    if mode=="playable":selected_profile=selected_profile or "playable-defaults"
+    else:selected_profile=None
+    options=dict(legacy=data.get("legacy",False),profile=selected_profile)
+    registry=RuleRegistry.from_data(data["rules"],data.get("assumptions"),**options) if "rules" in data else RuleRegistry.builtin(data.get("assumptions"),**options)
+    # Strict retains explicitly supplied assumptions, as before, but never enables a profile or empirical fallback.
+    registry.empirical=data.get("empirical_assumptions",{}) if mode!="strict" else {}
     game=Game(registry,board,accept_topology_assumption=data.get("accept_topology_assumption",False))
     return game,state
 
@@ -25,9 +32,10 @@ def to_plain(value):
     from dataclasses import fields,is_dataclass
     from fractions import Fraction
     from enum import Enum
+    from collections.abc import Mapping
     if isinstance(value,Enum):return value.value
     if isinstance(value,Fraction):return str(value)
     if is_dataclass(value):return {f.name:to_plain(getattr(value,f.name)) for f in fields(value)}
     if isinstance(value,(tuple,list,set,frozenset)):return [to_plain(v) for v in value]
-    if isinstance(value,dict):return {k:to_plain(v) for k,v in value.items()}
+    if isinstance(value,Mapping):return {k:to_plain(v) for k,v in value.items()}
     return value

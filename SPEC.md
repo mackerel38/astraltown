@@ -1553,3 +1553,19 @@ They never overwrite a verified-current rule, and unseen outcomes are not assign
 
 Current-game global completion remains subject to the unresolved rules and verification criteria in
 `RULE_STATUS.md`, `TARGETS.md`, and `docs/VALIDATION.md`.
+
+
+## Explicit playable assumption mode (implementation amendment, 2026-09-14)
+
+The current-game rules and confidence statements above are unchanged. Strict mode never fills an unknown distribution.
+An explicitly selected `playable-defaults` profile may use the separate assumptions enumerated in RULE_STATUS.md / README.md:
+uniform eligible target/type distributions, without-replacement multiple targets, fresh reward templates, uniform 3-subset stand
+menus, independent uniform 3-slot shops, legacy purchase/refresh prices, no purchase refill, and Palunan total sale scope.
+These are assumptions, not verification. Every result that references this profile must include `assumption-based` and the actually used assumptions.
+Existing explicit and empirical distributions remain supported. Unspecified non-probability rules still require input.
+
+`SELECT_STAND` does not consume the ordinary management-action depth, in either ordinary or clear-constrained search.
+A rejected duplicate stand is an illegal action, not a solver crash. Palunan `base_only` versus `total` sale scope is configurable,
+unknown, and independent from final-building-score interaction.
+Search resource exhaustion is distinct from missing game rules; it must not put `search_node_budget` in missing rule IDs.
+Rollout `max_rolls` is the maximum number of rolls for one complete trajectory, including a roll chosen as its first action.

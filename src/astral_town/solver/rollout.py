@@ -1,6 +1,6 @@
 """Seeded policy rollouts; estimates compare explicit first actions, not a global optimum."""
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass,field, replace
 from fractions import Fraction
 from math import sqrt
 from random import Random
@@ -10,6 +10,7 @@ from time import monotonic
 from astral_town.rules.errors import IllegalAction, CalculationCancelled
 from astral_town.rules.registry import UnresolvedRule
 from astral_town.rules.randomness import sample
+from .errors import SearchBudgetExceeded
 from .evaluation import Metrics,terminal_metrics,utility
 from .management_search import Action,actions,apply_action
 
@@ -36,6 +37,10 @@ class RolloutResult:
     limitations: tuple[str,...]
     assumptions_used: tuple[str,...] = ()
     empirical_rules_used: tuple[str,...] = ()
+    budget_exhausted: bool = False
+    profile: str | None = None
+    profile_assumptions_used: tuple[str,...] = ()
+    assumption_values: dict = field(default_factory=dict)
 
 
 def wilson(successes,n):
@@ -49,7 +54,7 @@ def wilson(successes,n):
 
 def rollout(game,state,*,iterations=200,seed=0,max_rolls=100,time_budget=None,cancel=None,
             allowed_actions=None,policy=None,objective="EXPECTED_SCORE",risk_lambda=Fraction(1),clear_threshold=Fraction()):
-    if iterations<1 or max_rolls<1:raise ValueError("Invalid rollout budget")
+    if iterations<1 or max_rolls<0:raise ValueError("Invalid rollout budget")
     rng=Random(seed)
     game.registry.used.clear();game.registry.missing.clear()
     deadline=monotonic()+time_budget if time_budget is not None else None
@@ -58,6 +63,7 @@ def rollout(game,state,*,iterations=200,seed=0,max_rolls=100,time_budget=None,ca
     unavailable=set()
     missing=set()
     stopped=False
+    exhausted=False
     def stop():return (cancel and cancel()) or (deadline is not None and monotonic()>=deadline)
     game.engine.cancel=stop
     def transition(current,action):
@@ -67,22 +73,32 @@ def rollout(game,state,*,iterations=200,seed=0,max_rolls=100,time_budget=None,ca
             if first in unavailable:continue
             if stop():stopped=True;break
             try:
-                current=transition(state,first)
-                for _step in range(max_rolls+1):
+                current=state
+                next_action=first
+                rolls=0
+                management_steps=0
+                while current.status=="playing":
                     if stop():stopped=True;break
+                    if next_action.kind=="END_MANAGEMENT_AND_ROLL":
+                        if rolls>=max_rolls:raise SearchBudgetExceeded()
+                        rolls+=1
+                        management_steps=0
+                    else:
+                        management_steps+=1
+                        if management_steps>1000:raise SearchBudgetExceeded()
+                    current=transition(current,next_action)
                     if current.status!="playing":break
                     if policy is not None:next_action=policy(game,current,rng)
                     elif current.phase=="stand_selection":next_action=Action("SELECT_STAND",target=0)
                     else:next_action=Action("END_MANAGEMENT_AND_ROLL")
-                    current=transition(current,next_action)
                 if stopped:break
-                if current.status=="playing":raise UnresolvedRule("rollout_horizon_not_terminal")
                 observations[first].append(terminal_metrics(game,current))
+            except SearchBudgetExceeded:exhausted=True;break
             except IllegalAction:
                 unavailable.add(first)
             except UnresolvedRule as exc:missing.update(exc.rule_ids)
             except CalculationCancelled:stopped=True;break
-        if stopped or missing:break
+        if stopped or missing or exhausted:break
     result=[]
     for action,rows in observations.items():
         if not rows or action in unavailable:continue
@@ -98,6 +114,10 @@ def rollout(game,state,*,iterations=200,seed=0,max_rolls=100,time_budget=None,ca
     scored=[(v,r) for v,r in scored if v is not None]
     scored.sort(key=lambda item:item[0],reverse=True)
     limitations=("fixed continuation policy (default: roll, select first stand)","approximate normal 95% score intervals; selection uncertainty not included")
+    if exhausted:limitations+=("rollout total roll/management safety budget exhausted; incomplete trajectories discarded",)
     label="unresolved" if missing else "cancelled" if stopped and not scored else "simulation-estimated"
+    if exhausted and not missing:label="budget-exhausted"
+    if game.registry.profile_assumptions_used:label+=" / assumption-based"
     return RolloutResult(tuple(r for _,r in scored[:3]) if not missing else (),label,seed,stopped,tuple(sorted(missing)),limitations,
-                         tuple(sorted(game.registry.used & game.registry.assumptions.keys())),tuple(sorted(game.registry.used & game.registry.empirical.keys())))
+                         game.registry.assumptions_used,tuple(sorted(game.registry.used & game.registry.empirical.keys())),
+                         exhausted,game.registry.profile,game.registry.profile_assumptions_used,game.registry.assumption_values)

@@ -15,6 +15,10 @@ def main() -> None:
     parser.add_argument("--report-index",type=int,default=0)
     parser.add_argument("--trace-output")
     parser.add_argument("--scenario", default="examples/artificial.json")
+    parser.add_argument("--profile",choices=["playable-defaults"])
+    parser.add_argument("--mode",choices=["strict","playable","custom","empirical"])
+    parser.add_argument("--node-budget",type=int,default=100000)
+    parser.add_argument("--max-rolls",type=int,default=100)
     parser.add_argument("--horizon", type=int, default=2)
     parser.add_argument("--management-depth", type=int, default=1)
     parser.add_argument("--seed", type=int, default=0)
@@ -23,6 +27,7 @@ def main() -> None:
     parser.add_argument("--clear-threshold",default="0")
     parser.add_argument("--risk-lambda",default="1")
     args = parser.parse_args()
+    if args.profile and args.mode not in (None,"playable"):parser.error("--profile requires playable mode")
     if args.command=="import-estimate":
         from pathlib import Path
         from astral_town.data.loader import load_file
@@ -41,7 +46,7 @@ def main() -> None:
         else:print(report)
     elif args.command == "gui":
         from astral_town.ui.app import run
-        run(args.scenario)
+        run(args.scenario,profile=args.profile,mode=args.mode)
     elif args.command in {"simulate", "solve", "rollout"}:
         from fractions import Fraction
         from random import Random
@@ -53,21 +58,21 @@ def main() -> None:
         from astral_town.solver.rollout import rollout
         try:
             data=load_file(args.scenario)
-            game,state=from_scenario(data)
+            game,state=from_scenario(data,profile=args.profile,mode=args.mode)
             if args.command=="simulate":
                 result=sample(game.roll(state),Random(args.seed))
                 if args.trace_output:
                     from pathlib import Path
                     from astral_town.model.serialization import encode
                     Path(args.trace_output).write_text(json.dumps({"seed":args.seed,"initial_state":encode(state),"events":encode(result.events)},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-                print(f"seed={args.seed}; exactness={game.exactness}; {data.get('description','')}")
+                print(f"seed={args.seed}; exactness={game.exactness}; profile={game.registry.profile}; {data.get('description','')}")
                 for entry in result.events:print(entry.describe())
                 print(json.dumps({"state":to_plain(result.state)},ensure_ascii=False,indent=2))
             else:
                 options=dict(objective=args.objective,clear_threshold=Fraction(args.clear_threshold),risk_lambda=Fraction(args.risk_lambda),allowed_actions=data.get("allowed_actions"))
                 if args.command=="solve":
-                    result=Expectimax(game,horizon=args.horizon,management_depth=args.management_depth,**options).solve(state)
-                else:result=rollout(game,state,iterations=args.iterations,seed=args.seed,**options)
+                    result=Expectimax(game,horizon=args.horizon,management_depth=args.management_depth,node_budget=args.node_budget,**options).solve(state)
+                else:result=rollout(game,state,iterations=args.iterations,seed=args.seed,max_rolls=args.max_rolls,**options)
                 print(json.dumps(to_plain(result),ensure_ascii=False,indent=2))
         except UnresolvedRule as exc:
             print(json.dumps({"exactness":"unresolved","missing_rule_ids":exc.rule_ids},ensure_ascii=False,indent=2))

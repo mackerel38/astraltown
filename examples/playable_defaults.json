@@ -1,0 +1,593 @@
+{
+  "description": "16マス・12土地・建物8個・屋台4個の人工状態。カード確率は未入力。--profile playable-defaults で明示的に一様分布を選択する比較例。その他の仮定は assumptions に明記。現行ゲームの観測値ではありません。",
+  "state": {
+    "$type": "GameState",
+    "difficulty_id": "artificial",
+    "stage_index": 5,
+    "turns_remaining": 1,
+    "wallet": 120,
+    "stage_progress": 45,
+    "player_position": 5,
+    "selected_packs": {
+      "$set": [
+        {
+          "$enum": "Pack",
+          "value": "LUCK"
+        },
+        {
+          "$enum": "Pack",
+          "value": "PIRATE"
+        },
+        {
+          "$enum": "Pack",
+          "value": "PROMOTION"
+        },
+        {
+          "$enum": "Pack",
+          "value": "PROSPERITY"
+        }
+      ]
+    },
+    "unlocked_lots": {
+      "$set": [
+        0,
+        1,
+        10,
+        11,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "buildings": [
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 0,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "SMALL_WALLET"
+        },
+        "level": 2,
+        "xp": 0,
+        "location": 0,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      },
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 1,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "WISHING_WELL"
+        },
+        "level": 2,
+        "xp": 0,
+        "location": 1,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      },
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 2,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "PIGGY_BANK"
+        },
+        "level": 2,
+        "xp": 0,
+        "location": 2,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      },
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 3,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "SAIL"
+        },
+        "level": 2,
+        "xp": 0,
+        "location": 3,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      },
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 4,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "TREASURE"
+        },
+        "level": 2,
+        "xp": 0,
+        "location": 4,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      },
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 5,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "PIGLET_BANK"
+        },
+        "level": 2,
+        "xp": 0,
+        "location": 5,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      },
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 6,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "FOUR_LEAF_INN"
+        },
+        "level": 2,
+        "xp": 0,
+        "location": 6,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      },
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 7,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "SMALL_BOOKSTORE"
+        },
+        "level": 2,
+        "xp": 0,
+        "location": 7,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      }
+    ],
+    "inventory": [
+      {
+        "$type": "BuildingInstance",
+        "instance_id": 20,
+        "building_type": {
+          "$enum": "BuildingType",
+          "value": "SMALL_WALLET"
+        },
+        "level": 1,
+        "xp": 0,
+        "location": null,
+        "dice_coin_bonus": 0,
+        "pass_coin_bonus": 0,
+        "stay_coin_bonus": 0,
+        "wish_stage_bonus": 0,
+        "treasure_decay": 0,
+        "captain_pass_bonus": 0,
+        "custom_counters": []
+      }
+    ],
+    "stands": [
+      {
+        "$type": "StandInstance",
+        "instance_id": 30,
+        "stand_type": {
+          "$enum": "StandType",
+          "value": "CREDIT_CARD"
+        },
+        "charge": 0
+      },
+      {
+        "$type": "StandInstance",
+        "instance_id": 31,
+        "stand_type": {
+          "$enum": "StandType",
+          "value": "SHOVEL"
+        },
+        "charge": 6
+      },
+      {
+        "$type": "StandInstance",
+        "instance_id": 32,
+        "stand_type": {
+          "$enum": "StandType",
+          "value": "RACCOON"
+        },
+        "charge": 0
+      },
+      {
+        "$type": "StandInstance",
+        "instance_id": 33,
+        "stand_type": {
+          "$enum": "StandType",
+          "value": "UPDATE"
+        },
+        "charge": 1
+      }
+    ],
+    "shop_offers": [],
+    "shop_refresh_count": 0,
+    "next_dice_count": 1,
+    "forced_die_effects": [],
+    "rule_version": "current-spec-2026-09-13",
+    "movement_remaining": 0,
+    "forced_stop": false,
+    "roll_id": 0,
+    "last_roll": [],
+    "progress_score": 500,
+    "status": "playing",
+    "phase": "management",
+    "stand_offers": []
+  },
+  "board": {
+    "$type": "Board",
+    "spaces": [
+      {
+        "$type": "Space",
+        "id": 0,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "START"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 1,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 0
+      },
+      {
+        "$type": "Space",
+        "id": 2,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 1
+      },
+      {
+        "$type": "Space",
+        "id": 3,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 2
+      },
+      {
+        "$type": "Space",
+        "id": 4,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "COIN"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 5,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 3
+      },
+      {
+        "$type": "Space",
+        "id": 6,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 4
+      },
+      {
+        "$type": "Space",
+        "id": 7,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 5
+      },
+      {
+        "$type": "Space",
+        "id": 8,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "CARD"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 9,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 6
+      },
+      {
+        "$type": "Space",
+        "id": 10,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 7
+      },
+      {
+        "$type": "Space",
+        "id": 11,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 8
+      },
+      {
+        "$type": "Space",
+        "id": 12,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "COIN"
+        },
+        "lot_id": null
+      },
+      {
+        "$type": "Space",
+        "id": 13,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 9
+      },
+      {
+        "$type": "Space",
+        "id": 14,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 10
+      },
+      {
+        "$type": "Space",
+        "id": 15,
+        "type": {
+          "$enum": "SpaceType",
+          "value": "NORMAL"
+        },
+        "lot_id": 11
+      }
+    ],
+    "lots": [
+      {
+        "$type": "Lot",
+        "id": 0,
+        "adjacent_lots": {
+          "$set": [
+            1,
+            11
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 1,
+        "adjacent_lots": {
+          "$set": [
+            0,
+            2
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 2,
+        "adjacent_lots": {
+          "$set": [
+            1,
+            3
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 3,
+        "adjacent_lots": {
+          "$set": [
+            2,
+            4
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 4,
+        "adjacent_lots": {
+          "$set": [
+            3,
+            5
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 5,
+        "adjacent_lots": {
+          "$set": [
+            4,
+            6
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 6,
+        "adjacent_lots": {
+          "$set": [
+            5,
+            7
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 7,
+        "adjacent_lots": {
+          "$set": [
+            6,
+            8
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 8,
+        "adjacent_lots": {
+          "$set": [
+            7,
+            9
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 9,
+        "adjacent_lots": {
+          "$set": [
+            10,
+            8
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 10,
+        "adjacent_lots": {
+          "$set": [
+            11,
+            9
+          ]
+        },
+        "corresponding_special_tile": null
+      },
+      {
+        "$type": "Lot",
+        "id": 11,
+        "adjacent_lots": {
+          "$set": [
+            0,
+            10
+          ]
+        },
+        "corresponding_special_tile": null
+      }
+    ],
+    "confidence": {
+      "$enum": "RuleConfidence",
+      "value": "inferred"
+    },
+    "source": "User-editable artificial 12-lot topology; NOT verified current mapping"
+  },
+  "accept_topology_assumption": true,
+  "allowed_actions": [
+    "END_MANAGEMENT_AND_ROLL"
+  ],
+  "assumptions": {
+    "gain_progress_sources": [
+      "building",
+      "tile",
+      "stand",
+      "sale"
+    ],
+    "roll_effect_order": "dice_then_roll",
+    "simultaneous_event_order": "board_then_stands",
+    "stage_clear_timing": "turn_end",
+    "stage_quotas": [
+      10,
+      20,
+      30,
+      40,
+      50,
+      60
+    ],
+    "stage_progress_scores": [
+      10,
+      20,
+      30,
+      40,
+      50,
+      100
+    ],
+    "score_wallet_rounding": "floor",
+    "score_building_value": "rarity_sell_base",
+    "inventory_capacity": 5,
+    "xp_max_storage": "discard",
+    "treasure_minimum": 0,
+    "stand_charge_consumption": "subtract",
+    "four_leaf_growth_order": "after_payout",
+    "forced_die_consumption": "all",
+    "forced_die_index": 0
+  }
+}

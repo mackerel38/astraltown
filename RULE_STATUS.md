@@ -309,6 +309,7 @@ Unknown:
 - whether percentages are still current
 - exact rounding
 - whether altered sell value affects final building score
+- whether the sale multiplier includes Piggy/Piglet-specific sale bonuses (`palunan_sale_scope`)
 
 ---
 
@@ -890,7 +891,7 @@ Unsupported configuration values are rejected. `treasure_minimum = 0` and unifor
 and are blocked unless explicitly supplied as assumptions.
 
 The runtime registry is `src/astral_town/data/rules.json`. It includes a source and confidence for every stored rule value.
-Missing dynamically named rules are also returned as unresolved IDs; they never receive a fallback.
+Missing dynamically named rules are also returned as unresolved IDs in strict mode; explicit profile defaults are resolved separately and never change evidence.
 The artificial examples opt into assumptions and are labeled accordingly.
 
 ## Empirical observations
@@ -901,6 +902,38 @@ Imported empirical assumptions remain separate from the registry and are checked
 
 ## Calculation diagnostics are not game rules
 
-`cutoff_heuristic`, `search_node_budget`, `rollout_horizon_not_terminal`, and `stochastic_management_search`
+`cutoff_heuristic`, search-node / rollout budgets, and `stochastic_management_search`
 describe implementation/search boundaries. They do not represent newly discovered in-game mechanics.
 The last ID is specific to the fixed-plan BFS helper; Expectimax can evaluate stochastic management decisions directly.
+
+## Playable default assumptions — 2026-09-14
+
+No new game verification was performed. All original unknown/inferred/legacy confidence assignments remain unchanged.
+`palunan_sale_scope` and the complete current `purchase_prices` table are stored as unknown dependencies.
+The opt-in `data/assumptions_playable.json` supplies the following separate assumptions; it is **not current-game probability evidence**.
+Strict mode never enables this profile implicitly. Results referencing any of these defaults are assumption-based.
+
+| Rule / strategy | Explicit playable default | Underlying evidence status |
+|---|---|---|
+| `random_target_distribution` | Uniform over eligible targets, preserving exclusions | inferred |
+| `multi_target_sampling` | Without replacement | unknown |
+| `card_distribution` | Uniform over eligible selected-pack building types | unknown |
+| `THREE_LEAF.distribution` | Uniform over eligible Luck types; all hybrid packs required | unknown |
+| `fox_generation_distribution` | Piggy/Piglet each 1/2 | unknown |
+| `cannon_reward_distribution` | Treasure with probability 1, fresh template | Generated instance state unknown |
+| `generated_building_state` | Lv1, XP0, all permanent bonuses/counters0, decay0, unplaced; card/rewards/shop | unknown |
+| `big_bag_distribution` | Uniform among placed instances | unknown |
+| `big_bag_copy_state`, `big_bag_template` | Template copy of type: fresh Lv1, XP/bonuses/counters0, unplaced | unknown |
+| `stand_offers` | Uniform 3-subsets of pack-eligible types; offer all if fewer than3 | Count3 legacy; current distribution/count unknown |
+| `shop_distribution` | 3 independent slots, uniform eligible type per slot, repeats allowed | Current count/weights unknown |
+| `purchase_prices` | Green8, Blue16, Purple30, Gold50 | Legacy table; Green8 also community-current support; complete current table unknown |
+| `refresh_prices` | min(5*(refresh_count+1),50), no finite-array boundary | confirmed_legacy pattern; current pricing unknown |
+| `shop_refill` | None after purchase | unknown |
+| `palunan_sale_scope` | total: (base+specific bonus)*multiplier; custom base_only also supported | unknown |
+
+Stand-selection duplicate legality remains a separate required setting when ownership overlaps an offer.
+No extra assumption is added for empty/insufficient targets, inventory overflow, Palunan percentages/rounding/score,
+actual topology, quotas, or unspecified effect ordering. The sample supplies its other necessary values explicitly.
+The profile uses building-type weights directly, never the legacy rarity probability table.
+`assumptions_used` / `assumption_values` and `profile_assumptions_used` record actual evaluated dependencies only.
+Search node budget exhaustion and rollout roll-limit exhaustion now have resource statuses, never missing rule IDs.

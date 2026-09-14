@@ -1670,6 +1670,16 @@
       "value": null,
       "confidence": "unknown",
       "source": "Two-die 1+6 branch interaction not specified in SPEC.md §17.4"
+    },
+    "palunan_sale_scope": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "Unverified interaction: Palunan multiplier scope over building-specific sale bonuses; explicit total/base_only assumption required."
+    },
+    "purchase_prices": {
+      "value": null,
+      "confidence": "unknown",
+      "source": "RULE_STATUS.md §13: current complete rarity price table unknown; playable profile explicitly uses legacy 8/16/30/50, without promoting that evidence."
     }
   }
 }

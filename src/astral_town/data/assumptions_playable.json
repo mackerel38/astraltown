@@ -1,0 +1,79 @@
+{
+  "name": "playable-defaults",
+  "description": "Explicit convenience assumptions, not verified current game probabilities. Opt-in only; results are assumption-based. Non-probability rules not listed here still require user input.",
+  "assumptions": {
+    "random_target_distribution": "uniform",
+    "multi_target_sampling": "without_replacement",
+    "card_distribution": {
+      "strategy": "uniform_eligible_buildings",
+      "template_rule": "generated_building_state"
+    },
+    "THREE_LEAF.distribution": {
+      "strategy": "uniform_eligible_buildings",
+      "required_pack": "LUCK",
+      "template_rule": "generated_building_state"
+    },
+    "fox_generation_distribution": {
+      "strategy": "uniform_eligible_buildings",
+      "types": [
+        "PIGGY_BANK",
+        "PIGLET_BANK"
+      ],
+      "template_rule": "generated_building_state"
+    },
+    "cannon_reward_distribution": {
+      "strategy": "uniform_eligible_buildings",
+      "types": [
+        "TREASURE"
+      ],
+      "template_rule": "generated_building_state"
+    },
+    "generated_building_state": {
+      "level": 1,
+      "xp": 0,
+      "dice_coin_bonus": 0,
+      "pass_coin_bonus": 0,
+      "stay_coin_bonus": 0,
+      "wish_stage_bonus": 0,
+      "treasure_decay": 0,
+      "captain_pass_bonus": 0,
+      "custom_counters": []
+    },
+    "big_bag_distribution": "uniform",
+    "big_bag_copy_state": "template",
+    "big_bag_template": {
+      "level": 1,
+      "xp": 0,
+      "dice_coin_bonus": 0,
+      "pass_coin_bonus": 0,
+      "stay_coin_bonus": 0,
+      "wish_stage_bonus": 0,
+      "treasure_decay": 0,
+      "captain_pass_bonus": 0,
+      "custom_counters": []
+    },
+    "stand_offers": {
+      "strategy": "uniform_eligible_stands",
+      "count": 3
+    },
+    "shop_distribution": {
+      "strategy": "uniform_eligible_buildings",
+      "slots": 3,
+      "template_rule": "generated_building_state",
+      "prices_rule": "purchase_prices"
+    },
+    "purchase_prices": {
+      "GREEN": 8,
+      "BLUE": 16,
+      "PURPLE": 30,
+      "GOLD": 50
+    },
+    "refresh_prices": {
+      "strategy": "linear_capped",
+      "step": 5,
+      "cap": 50
+    },
+    "shop_refill": "none",
+    "palunan_sale_scope": "total"
+  }
+}

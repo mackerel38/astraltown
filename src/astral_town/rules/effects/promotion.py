@@ -7,7 +7,7 @@ from astral_town.model.events import Event
 from astral_town.model.outcomes import WeightedOutcome, validate_distribution
 from astral_town.rules.economy import gain_xp, remove_building, gain_coin
 from astral_town.rules.engine import Transition, deterministic
-from astral_town.rules.catalog import sell_value
+from astral_town.rules.catalog import sale_components
 from .prosperity import charge
 
 
@@ -74,9 +74,13 @@ def install_promotion(effects):
 
     def sell(state,event):
         b=state.building(event.source_id)
-        amount=sell_value(b,registry)
+        base,bonus=sale_components(b,registry)
+        amount=base+bonus
         if any(s.stand_type==S.PALUNAN for s in state.stands):
-            amount=palunan_amount(amount,registry,"palunan_sale")
+            scope=registry.require("palunan_sale_scope")
+            if scope=="total":amount=palunan_amount(amount,registry,"palunan_sale")
+            elif scope=="base_only":amount=palunan_amount(base,registry,"palunan_sale")+bonus
+            else:raise ValueError("Invalid Palunan sale scope")
         state=remove_building(state,b.instance_id)
         if b.building_type in {B.PIGGY_BANK,B.PIGLET_BANK}:
             state=effects.bonus(state,effects.placed(state,kind={B.BECKONING_CAT_VAULT}),"pass_coin_bonus",registry.require("BECKONING_CAT_VAULT.sale_bonus"))

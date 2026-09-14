@@ -28,7 +28,7 @@ this table is not a declaration that the current-game global completion criteria
 | 10 | Management actions, bounded fixed-plan BFS, canonical deduplication, safe opt-in wallet-dominance helper | Fixed-plan BFS stops at stochastic decisions; Expectimax handles their contingent continuations. Dominance is not enabled without monotonicity. |
 | 11 | Expectimax, rational metrics, transpositions, budgets, heuristic API, constrained-policy frontiers | Action/horizon limits are reported; contingent constrained continuations are not yet rendered as full policy trees. |
 | 12 | Seeded policy rollout, presets, iteration/time limits, cancellation, confidence intervals | Not MCTS; default continuation is roll / first stand, explicitly reported. |
-| 13 | Structured missing-rule IDs, assumption tracking, empirical tracking, no uniform fallback | These diagnostics cannot replace real-game verification. |
+| 13 | Structured missing-rule IDs, assumption tracking, empirical tracking, no implicit uniform fallback in strict mode | These diagnostics cannot replace real-game verification. |
 | 14 | Optional PySide6 editor, 16-space view, all state fields, instance tables, settings, worker cancellation, results | Shop/topology/rules use JSON editors; visual/manual QA used the offscreen Qt backend. |
 | 15 | JSON/CSV observations, empirical frequencies/errors/intervals, context-checked explicit import | No true current probabilities inferred from artificial observations. |
 | 16 | Profiling, bounded turn-outcome cache preserving identity and rule dependencies | Measured on the supplied artificial scenarios, not an unrestricted full-game benchmark. |
@@ -36,6 +36,22 @@ this table is not a declaration that the current-game global completion criteria
 Validation commands and measured examples are recorded in `docs/VALIDATION.md`.
 Actual current-version topology, quotas, shop/card/stand data, disputed effects, and scoring still need evidence.
 The complete optimizer is **not** declared finished solely because the artificial scenarios run successfully.
+
+## Review corrections and playable profile — 2026-09-14
+
+- SELECT_STAND is a mandatory transition decision, free of ordinary management depth in Expectimax, constrained frontiers, displayed sequences, and the BFS helper.
+- SearchBudgetExceeded separates resource exhaustion from missing game rules; only fully evaluated root candidates may survive as bounded search.
+- Duplicate stand rejection raises IllegalAction and leaves legal alternatives searchable.
+- Palunan sale scope supports total/base_only, retaining unknown confidence and independent score settings.
+- Rollout max_rolls counts total calls per trajectory including the first action; incomplete trajectories are not scored.
+- Opt-in playable-defaults provides dynamic rational card/reward/shop/stand strategies, uniform targeting, fresh templates, and the explicitly documented legacy/default economy assumptions.
+- CLI/GUI rule modes are separate from solver algorithm; used assumptions and their values are reported without changing Rule Status confidence.
+- Python 3.12/3.13 core CI and a separate offscreen Python 3.12 GUI smoke job are configured.
+- Regression tests cover distributions, hybrid eligibility, confidence/override precedence, strict blockers, cache provenance, GUI modes and all listed review bugs.
+
+Remaining boundaries: non-probability unknowns still require explicit input; full transition enumeration can be expensive;
+rollout stand continuation remains first-offer policy (greedy deferred, not MCTS); constrained policy-tree rendering remains partial.
+See docs/VALIDATION.md for actually executed checks and current results.
 
 ---
 

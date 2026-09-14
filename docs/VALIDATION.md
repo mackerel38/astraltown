@@ -1,95 +1,104 @@
 # Implementation validation
 
-Date: 2026-09-14. Environment: Python 3.14.7, pytest 9.1.1, PySide6 6.11.2.
-This records software checks, not verification of the real game's rules.
+Date: 2026-09-14. Local environment: Python 3.14.7, pytest 9.1.1, PySide6 6.11.2.
+These are software checks, not verification of current-game rules or probabilities.
 
-Latest full run: **129 passed**, including the optional offscreen Qt subprocess check.
-All three documented solver scenarios were rerun, and two separate NORMAL / 200-trial CLI runs
-with seed 42 produced identical output with three recommendations.
+## Latest full verification
 
-## Phase checks
+**181 passed**, including two optional offscreen Qt subprocess smoke tests.
+`python -m compileall -q src` and `git diff --check` completed successfully.
+All pre-existing entries in `rules.json` were compared with the previous commit: values, sources,
+and confidence assignments are unchanged. New `palunan_sale_scope` and `purchase_prices` dependencies are unknown.
 
-The implementation was exercised sequentially with pytest after each group:
-
-| Coverage reached | Passing tests at that point |
-|---|---:|
-| Bootstrap | 5 |
-| Model/registry | 14 |
-| Deterministic engine | 31 |
-| Dice/movement | 41 |
-| Prosperity | 54 |
-| Promotion | 67 |
-| Luck | 76 |
-| Pirate | 84 |
-| Common stands/scoring | 95 |
-| Full-turn integration/management | 103 |
-| Expectimax | 109 |
-| Rollout | 111 |
-| Calibration | 114 |
-| Cache and subsequent regressions | See current `pytest` output. |
-
-The suite includes hand-computable one/two-roll expectations, global clear-constraint tradeoffs,
-all mandatory interaction families, probability normalization, reward impossibility checks,
-unknown-rule blockers, cache identity/provenance, reproducible sampling, and optional Qt subprocess tests.
+Executed locally using `.venv/bin/python` / `.venv/bin/pytest`:
 
 ```bash
-source .venv/bin/activate
 pytest
 python -m compileall -q src
 python -m astral_town trace
-python examples/scripted_effects.py
+python -m astral_town simulate --scenario examples/playable_defaults.json --profile playable-defaults --seed 42
 python -m astral_town solve --scenario examples/artificial.json --horizon 1 --management-depth 1
 python -m astral_town solve --scenario examples/populated_assumptions.json --horizon 2 --management-depth 0
 python -m astral_town solve --scenario examples/populated_comparison.json --horizon 1 --management-depth 1
-python -m astral_town rollout --scenario examples/populated_comparison.json --iterations 200 --seed 42
-python -m astral_town simulate --scenario examples/populated_assumptions.json --seed 42
+python -m astral_town solve --scenario examples/playable_defaults.json --mode strict --horizon 1 --management-depth 0
+python -m astral_town solve --scenario examples/playable_defaults.json --profile playable-defaults --horizon 1 --management-depth 0
+python -m astral_town solve --scenario examples/playable_defaults.json --profile playable-defaults --horizon 1 --node-budget 1
+python -m astral_town rollout --scenario examples/playable_defaults.json --profile playable-defaults --iterations 1000 --seed 42 --max-rolls 1
 ```
+
+The last command was run twice as separate CLI processes. Complete JSON outputs matched, including metrics,
+intervals, used assumptions, labels and sample counts. The sampled event trace ran successfully (223 output lines).
+
+## Review regressions exercised
+
+- Ordinary Expectimax and clear-constrained frontier: depth 1 permits SELECT_STAND → PLACE → ROLL,
+  giving score 24 and clear probability 1 in a hand-computable state. Fixed-plan BFS also permits this sequence.
+- Duplicate prohibited stand candidate raises IllegalAction; both solver objectives evaluate the other legal candidate successfully.
+- A search node budget of 1 returns budget-exhausted, without missing rule IDs. A completed root candidate can survive
+  a later budget hit as bounded-search; unfinished candidates are discarded.
+- Piggy and Piglet sale bonuses were tested with both Palunan scopes and an independent final-score setting.
+  Omitting sale scope still raises the corresponding unknown rule.
+- Counted game.roll calls confirm limits 0, 1, 2 and 3, for both a management first action and a roll first action.
+  A terminal state reached on the last permitted roll is scored; nonterminal trajectories are not.
+
+## Distribution and mode checks
+
+Tests use Fraction probabilities without floating-point normalization. Coverage includes:
+
+- Uniform random targets for N = 2, 3 and 4; Rabbit self-exclusion, placed-only eligibility and separate empty-target policy.
+- Dynamic card pools under changed selected packs; hybrid pack requirements; fresh Lv1/XP0/bonus0/counter0 unplaced instances.
+- Three-leaf eligible Luck-only pools; Fox Piggy/Piglet 1/2 each; deterministic fresh Cannon Treasure.
+- Fox without-replacement target subsets and Big Bag uniform placed-instance selection with fresh template copies.
+- Uniform stand 3-subsets with exact total probability 1, no permutations; small configured pools offer all types.
+- Independent shop slot marginals and joint mass for Luck-only and all-pack pools; prices, repeated types,
+  generated templates, real refresh/purchase events and no purchase refill.
+- Refresh counts 0, 1, 8, 9 and 1000, including the permanent price cap.
+- Explicit, empirical and synthetic verified distribution precedence over profile defaults without confidence promotion.
+- Strict blocks the same card probability that playable mode resolves; cache reuse preserves used profile assumptions, including a profile → empirical → profile round trip.
+- Budget-exhausted results retain the assumption-based label when a profile dependency was referenced.
+- GUI mode switching, warning visibility, unchanged Rule Status confidence, result values, editor serialization and cancellation.
 
 ## Artificial scenario results
 
-`artificial.json` compares placing a Small Wallet in either lot, selling it, and rolling.
-At depth 1 / horizon 1, placement then roll scores 24 with clear probability 1;
-selling then rolling scores 22. The two placements tie, so the next-best gap is 0.
+The three existing examples preserve their previous results:
 
-`populated_assumptions.json` has 16 spaces, 12 lots, 8 placed buildings, 4 stands, and 2 remaining rolls.
-Its explicit action set contains only rolling. Exact branch enumeration gives expected score `28733/36`,
-expected wallet `1444/9`, and clear probability 1 under the stated assumptions.
-
-`populated_comparison.json` uses the same scale with one remaining turn and compares placement, sale, and rolling.
-The top results at management depth 1 / horizon 1 are:
-
-| Plan | Expected final score | Clear probability |
+| Scenario / best plan | Expected score | Clear probability |
 |---|---:|---:|
-| Sell Piggy Bank #2, then roll | `1573/2` | 1 |
-| Sell Small Bookstore #7, then roll | `2336/3` | 1 |
-| Sell Sail #3, then roll | `778` | 1 |
+| artificial: place Small Wallet, roll | 24 | 1 |
+| artificial: sell Small Wallet, roll | 22 | 1 |
+| populated_assumptions: roll-only, horizon 2 | 28733/36 | 1 |
+| populated_comparison: sell Piggy #2, roll | 1573/2 | 1 |
+| populated_comparison: sell Bookstore #7, roll | 2336/3 | 1 |
+| populated_comparison: sell Sail #3, roll | 778 | 1 |
 
-All are reported as bounded search / assumption-based. These are not recommendations for an observed current game.
+The new `playable_defaults.json` has 16 spaces, 12 lots, 8 placed buildings, 4 stands and one remaining roll.
+It supplies artificial non-probability assumptions and leaves the card distribution unspecified.
 
-## Profiling
+| Mode | Actual result |
+|---|---|
+| Strict | unresolved; missing_rule_ids = [card_distribution]; no recommendation |
+| playable-defaults, horizon 1 | bounded-search / assumption-based; EV = 2111/3; P(clear) = 1/3; expected wallet = 398/3 |
+| playable-defaults, node budget 1 | budget-exhausted / assumption-based; missing_rule_ids empty |
+| playable-defaults, seed 42, 1000 rollout trials | simulation-estimated / assumption-based; sample EV = 704641/1000; sample P(clear) = 343/1000 |
 
-Before optimizing, the populated two-roll scenario was profiled with `cProfile`.
-A measured seeded 50-trial roll-only run took approximately 0.85 seconds without turn reuse.
-After adding a 128-entry turn-outcome cache, the same run took approximately 0.05 seconds,
-with the same expected sample score `19952/25` and 93 cache hits.
-These are illustrative measurements on this environment, not time assertions in tests.
+Only `card_distribution` and `generated_building_state` appear in `profile_assumptions_used` for this sample.
+`assumptions_used` additionally lists the individual non-probability assumptions actually read. Unused shop defaults are absent.
 
-The cache keys retain original instance IDs for executable traces. Strategic transpositions use separate canonical keys.
-Cache hits restore the rule dependency set, so an assumption-dependent result cannot become labeled exact after reuse.
-Unknown/failed transitions are not cached. Cancellation is checked before returning a cached result.
+## CI configuration
 
-## GUI and observations
+`.github/workflows/test.yml` defines Python 3.12 and 3.13 core jobs installing `.[test]`, running pytest and compileall.
+A separate Python 3.12 job installs `.[gui,test]` and runs `QT_QPA_PLATFORM=offscreen pytest tests/test_ui.py`.
+The local results above use Python 3.14.7; execution of the other versions is reported by
+[the repository Actions runs](https://github.com/mackerel38/astraltown/actions/workflows/test.yml).
 
-The PySide6 GUI was launched using `QT_QPA_PLATFORM=offscreen`. Checks covered editing and serializing state,
-rendering the board, computing the placement result, cancellation, and safe worker shutdown.
-Screenshots were inspected for layout. No actual game window was inspected.
+## Remaining limitations
 
-Observation round trips cover CSV and JSON. The calibration CLI and explicit estimate import were run against
-`examples/observations.json`, which is artificial. Different-stage context is rejected and inferred confidence is retained.
+No actual current-version topology, complete quota/turn data, or new in-game probability evidence was collected.
+Unspecified non-probability rules (including inventory overflow, empty targets, duplicate stand legality,
+Palunan percentages/rounding, and effect ordering) still need explicit input when reached.
+Playable defaults are assumptions only; their successful tests do not verify them as current-game truth.
 
-## Remaining verification
-
-The project-wide current-game completion criterion remains open: no actual current-version state with verified
-topology, full quota/turn data, distribution data, score details, and unresolved effect ordering was available.
-The engine intentionally blocks those dependencies without explicit assumptions.
-Full unrestricted-game performance and a full contingent-policy-tree UI remain outside the demonstrated coverage.
+Exact shops enumerate N^3 outcomes, and rollouts currently enumerate the full transition before sampling it.
+The search node budget does not bound event-expansion memory. Unrestricted full-game performance is not demonstrated.
+Default rollout continuation remains roll / first stand; greedy stand evaluation is deferred and this is not MCTS.
+The clear-constrained solver displays the first action, not the complete contingent policy tree.

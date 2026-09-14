@@ -115,9 +115,10 @@ class Game:
         if state.player_position not in ids or not state.unlocked_lots<=lots:raise ValueError("State does not fit board")
         key=(state,repr(self.registry.empirical),self.registry.legacy)
         if key in self.roll_cache:
-            outcomes,dependencies=self.roll_cache.pop(key)
-            self.roll_cache[key]=(outcomes,dependencies)
+            outcomes,dependencies,sources=self.roll_cache.pop(key)
+            self.roll_cache[key]=(outcomes,dependencies,sources)
             self.registry.used.update(dependencies)
+            self.registry.resolved_sources.update(sources)
             self.roll_cache_hits+=1
             return outcomes
         previous=self.registry.used.copy()
@@ -125,9 +126,10 @@ class Game:
         try:
             outcomes=self.engine.run(state,(Event(E.MANAGEMENT_END),Event(E.PRE_ROLL),Event(E.ROLL),Event(E.TURN_END)))
             dependencies=frozenset(self.registry.used)
+            sources={k:self.registry.resolved_sources[k] for k in dependencies if k in self.registry.resolved_sources}
         finally:self.registry.used.update(previous)
         if self.roll_cache_limit:
-            self.roll_cache[key]=(outcomes,dependencies)
+            self.roll_cache[key]=(outcomes,dependencies,sources)
             while len(self.roll_cache)>self.roll_cache_limit:self.roll_cache.popitem(last=False)
         return outcomes
 
